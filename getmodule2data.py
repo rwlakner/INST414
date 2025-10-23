@@ -3,7 +3,7 @@ import time
 import json
 from tqdm import tqdm
 
-GITHUB_TOKEN = "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"  # Replace with your GitHub token
+GITHUB_TOKEN = ""  # Replace with your GitHub token
 HEADERS = {"Authorization": f"token {GITHUB_TOKEN}"}
 
 TOPIC = "machine-learning"
