@@ -21,7 +21,7 @@ for repo, contributors in data.items():
 print(f"Graph has {G.number_of_nodes()} nodes and {G.number_of_edges()} edges")
 
 degree_centrality = nx.degree_centrality(G)
-pagerank = nx.pagerank(G, alpha=.85)
+eigenvector_centrality = nx.eigenvector_centrality(G)
 
 def top_n(dictionary, n=5):
     return sorted(dictionary.items(), key=lambda x: x[1], reverse=True)[:n]
@@ -30,15 +30,15 @@ print("\nTop By Degree Centrality:")
 for user, score in top_n(degree_centrality):
     print(f"{user}: {score:.4f}")
 
-print("\nTop By PageRank:")
-for user, score in top_n(pagerank):
+print("\nTop By Eigenvector Centrality:")
+for user, score in top_n(eigenvector_centrality):
     print(f"{user}: {score:.4f}")
 
 dc_users = [user for user, _ in top_n(degree_centrality, 500)]
 dc_subgraph = G.subgraph(dc_users)
 
-pr_users = [user for user, _ in top_n(pagerank, 500)]
-pr_subgraph = G.subgraph(pr_users)
+ev_users = [user for user, _ in top_n(eigenvector_centrality, 500)]
+ev_subgraph = G.subgraph(ev_users)
 
 plt.figure(figsize=(10, 8))
 pos = nx.spring_layout(dc_subgraph, seed=42)
@@ -49,9 +49,9 @@ plt.tight_layout()
 plt.show()
 
 plt.figure(figsize=(10, 8))
-pos = nx.spring_layout(pr_subgraph, seed=42)
-nx.draw_networkx(pr_subgraph, pos, with_labels=True, node_color='skyblue', edge_color='gray')
-plt.title("Top Contributors Network (by PageRank)")
+pos = nx.spring_layout(ev_subgraph, seed=42)
+nx.draw_networkx(ev_subgraph, pos, with_labels=True, node_color='skyblue', edge_color='gray')
+plt.title("Top Contributors Network (by Eigenvector Centrality)")
 plt.axis('off')
 plt.tight_layout()
 plt.show()
